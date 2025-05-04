@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Observers\FileObserver;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class File extends Model
 {
@@ -19,5 +20,10 @@ class File extends Model
     protected static function boot()
     {
         self::observe(FileObserver::class);
+    }
+
+    public function getURL()
+    {
+        return Storage::url($this->path);
     }
 }
