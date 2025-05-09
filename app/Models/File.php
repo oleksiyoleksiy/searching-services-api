@@ -17,12 +17,7 @@ class File extends Model
         'model_id',
     ];
 
-    protected static function boot()
-    {
-        self::observe(FileObserver::class);
-    }
-
-    public function getURL()
+    public function getURL(): string
     {
         return Storage::url($this->path);
     }
