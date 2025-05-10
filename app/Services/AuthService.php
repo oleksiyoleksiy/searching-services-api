@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Laravel\Passport\Passport;
 use Laravel\Sanctum\PersonalAccessToken;
@@ -21,9 +22,19 @@ class AuthService
 
     public function register(array $data)
     {
-        $user = User::create($data);
+        return DB::transaction(function () use ($data) {
+            $userType = $data['user_type'];
 
-        return $this->createToken($user);
+            unset($data['user_type']);
+
+            $user = User::create($data);
+
+            if ($userType === 'provider') {
+                $user->assignRole('provider');
+            }
+
+            return $this->createToken($user);
+        });
     }
 
     public function refresh(Request $request)

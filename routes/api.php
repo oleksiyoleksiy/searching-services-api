@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('guest:sanctum')->controller(AuthController::class)->group(
     function () {
         Route::post('/login', 'login');
+        Route::post('/register', 'register');
     }
 );
 

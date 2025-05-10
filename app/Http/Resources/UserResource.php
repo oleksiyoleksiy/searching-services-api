@@ -20,7 +20,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'roles' => RoleResource::collection($this->roles),
             'avatar' => $this->filesByType('avatar')->first()?->getURL() ?? "https://ui-avatars.com/api/?name=$this->name",
-            'created_at' => $this->created_at->format('Y.m.d')
+            'created_at' => $this->created_at->format('Y.m.d'),
         ];
     }
 }
