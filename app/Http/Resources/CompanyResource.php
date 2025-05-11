@@ -17,6 +17,7 @@ class CompanyResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'categories' => CategoryResource::collection($this->categories),
             'years_of_experience' => $this->years_of_experience
         ];
     }

@@ -5,14 +5,14 @@ namespace App\Traits;
 use App\Models\File;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Facades\Storage;
 
 trait FileTrait
 {
-    public function files(): HasMany
+    public function files(): MorphMany
     {
-        return $this->hasMany(File::class, 'object_id')
-        ->where('object', class_basename($this));
+        return $this->morphMany(File::class, 'object');
     }
 
     public function filesByType(string $type)
