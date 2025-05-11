@@ -31,6 +31,15 @@ class AuthService
 
             if ($userType === 'provider') {
                 $user->assignRole('provider');
+
+                $company = $user->company()->create([
+                    'name' => $data['company_name'],
+                    'years_of_experience' => $data['years_of_experience'],
+                ]);
+
+                foreach ($data['categories'] as $category) {
+                    $company->categories()->attach($category);
+                }
             }
 
             return $this->createToken($user);

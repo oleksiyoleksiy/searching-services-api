@@ -25,12 +25,12 @@ class RegisterRequest extends FormRequest
             'user_type' => 'required|string|in:client,provider',
             'name' => 'required|string|max:50',
             'email' => ['required', 'string', 'email:rfc,dns', 'ends_with:.com,.net,.ua', "unique:users,email,{$this->user_id},id",],
+            'phone_number' => ['required', 'phone', "unique:users,phone_number,{$this->user_id},id"],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'company_name' => ['required_if:user_type,provider', 'string', 'max:50'],
-            'categories' => ['required', 'array'],
+            'company_name' => ['required_if:user_type,provider', 'nullable', 'string', 'max:50'],
+            'categories' => ['required_if:user_type,provider', 'nullable', 'array'],
             'categories.*' => ['required', 'integer', 'exists:categories,id'],
-            'years_of_experience' => ['required_if:user_type,provider', 'integer', 'min:1'],
-            'phone_number' => ['required', 'phone']
+            'years_of_experience' => ['required_if:user_type,provider', 'nullable', 'integer', 'min:0'],
         ];
     }
 }
