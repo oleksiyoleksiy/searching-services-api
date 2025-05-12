@@ -16,7 +16,7 @@ class Category extends Model
 
     public function services(): HasMany
     {
-        return $this->hasMany(Category::class);
+        return $this->hasMany(Service::class);
     }
 
     public function companies(): BelongsToMany

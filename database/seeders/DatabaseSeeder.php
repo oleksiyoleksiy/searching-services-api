@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Service;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -27,13 +28,20 @@ class DatabaseSeeder extends Seeder
                 'phone_number' => '+380999999999'
             ]);
 
+            $provider = User::factory()->create([
+                'name' => 'provider',
+                'email' => 'provider@gmail.com',
+                'address' => '123 provider St, Uzhhorod',
+                'phone_number' => '+380111111111'
+            ]);
+
             $admin = Role::create([
                 'name' => 'admin',
                 'guard_name' => 'api'
             ]);
 
 
-            $provider = Role::create([
+            $providerRole = Role::create([
                 'name' => 'provider',
                 'guard_name' => 'api'
             ]);
@@ -54,28 +62,85 @@ class DatabaseSeeder extends Seeder
 
             $admin->permissions()->attach($adminPermission);
 
-            $provider->permissions()->attach($providerPermission);
+            $providerRole->permissions()->attach($providerPermission);
 
             $user->roles()->attach($admin);
 
             $categories = [
-                'plumbing',
-                'electrical',
-                'cleaning',
-                'landscaping',
-                'painting',
-                'hvac',
-                'security',
-                'it',
-                'construction',
-                'delivery'
+                'Hair & Beauty',
+                'Home Repair',
+                'Education',
+                'Art & Design',
+                'Automotive',
+                'Home Services',
+                'Health & Wellness',
+                'Food & Drink',
+                'Personal Shopping',
+                'Music Lessons',
+                'IT'
             ];
+
+
+            $company = $provider->company()->create([
+                'name' => 'Test LLC',
+                'years_of_experience' => 5,
+            ]);
+
+
+            $company->availabilities()->create([
+                'day' => 'monday',
+                'start' => '8:00:00',
+                'end' => '18:00:00'
+            ]);
+
+            $company->availabilities()->create([
+                'day' => 'tuesday',
+                'start' => '8:00:00',
+                'end' => '18:00:00'
+            ]);
+
+            $company->availabilities()->create([
+                'day' => 'wednesday',
+                'start' => '8:00:00',
+                'end' => '18:00:00'
+            ]);
 
             foreach ($categories as $category) {
                 Category::create([
                     'name' => $category
                 ]);
             }
+            
+            $company->categories()->sync([1, 2, 3]);
+
+            $provider->services()->create([
+                'name' => 'Car checkout',
+                'description' => 'full checkout of your vehicle',
+                'price' => '100'
+            ]);
+
+            $provider->services()->create([
+                'name' => 'Car software update',
+                'description' => 'update your car software',
+                'price' => '50'
+            ]);
+
+            $user->reviews()->create([
+                'company_id' => $company->id,
+                'content' => 'Great service! Very professional and on time. Would definitely recommend.',
+                'rating' => 5
+            ]);
+
+            $user->reviews()->create([
+                'company_id' => $company->id,
+                'content' => 'Good experience overall. Service was as described and reasonably priced.',
+                'rating' => 4
+            ]);
+
+            $company->files()->create([
+                'path' => '/storage/images/car-checkout.png',
+                'type' => 'preview'
+            ]);
         });
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\CategoryResource;
+use App\Models\Category;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
 
@@ -13,5 +14,10 @@ class CategoryController extends Controller
     public function index()
     {
         return CategoryResource::collection($this->service->index());
+    }
+
+    public function show(int $category)
+    {
+        return CategoryResource::make($this->service->show($category));
     }
 }

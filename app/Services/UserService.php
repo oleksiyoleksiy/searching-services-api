@@ -22,11 +22,11 @@ class UserService
             $user->update($data);
 
             if ($avatar_remove) {
-                $user->filesByType('avatar')->delete();
+                $user->filesByType('avatar')->first()?->delete();
             }
 
             if ($avatar) {
-                $user->filesByType('avatar')->delete();
+                $user->filesByType('avatar')->first()?->delete();
 
                 $path = $avatar->store('images');
 

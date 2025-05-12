@@ -10,4 +10,16 @@ class CategoryService
     {
         return Category::all();
     }
+
+    public function show(int $category)
+    {
+        $query = Category::query();
+
+        $search = request()->query('search');
+        // $distance = request()->query('distance');
+        $search = request()->query('search');
+        $search = request()->query('search');
+
+
+    }
 }
