@@ -17,7 +17,7 @@ class CategoryShowResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'services' => ServiceResource::collection($this->services)
+            'provider_count' => $this->companies()->count(),
         ];
     }
 }

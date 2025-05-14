@@ -18,6 +18,7 @@ Route::middleware('guest:sanctum')->controller(AuthController::class)->group(
 Route::post('/refresh', [AuthController::class, 'refresh'])
     ->middleware(['auth:sanctum', 'ability:' . TokenAbility::ISSUE_ACCESS_TOKEN->value]);
 
+Route::get('/category/{category}/provider', [ProviderController::class, 'index']);
 Route::apiResource('category', CategoryController::class);
 
 Route::middleware(['auth:sanctum', 'ability:' . TokenAbility::ACCESS_API->value])->group(function () {

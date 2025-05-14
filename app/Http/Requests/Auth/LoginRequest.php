@@ -38,11 +38,11 @@ class LoginRequest extends FormRequest
     public function withValidator(Validator $validator)
     {
         $validator->after(function ($validator) {
-
             $data = [
                 'email' => $this->email,
                 'password' => $this->password
             ];
+
 
             if (!Auth::attempt($data)) {
                 $validator->errors()->add('email', 'incorrect email or password');

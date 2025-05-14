@@ -3,13 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Provider\UpdateRequest;
+use App\Http\Resources\CategoryResource;
+use App\Http\Resources\CompanyResource;
 use App\Http\Resources\UserResource;
+use App\Models\Category;
 use App\Services\ProviderService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ProviderController extends Controller
 {
     public function __construct(private ProviderService $service) {}
+
+    public function index(Category $category)
+    {
+        return response()->json([
+            'category' => CategoryResource::make($category),
+            'providers' => CompanyResource::collection($this->service->index($category))
+        ], Response::HTTP_OK);
+    }
 
     public function update(UpdateRequest $request)
     {

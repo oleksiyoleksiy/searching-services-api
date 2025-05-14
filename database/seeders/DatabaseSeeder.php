@@ -88,38 +88,41 @@ class DatabaseSeeder extends Seeder
 
 
             $company->availabilities()->create([
-                'day' => 'monday',
-                'start' => '8:00:00',
-                'end' => '18:00:00'
+                'day' => 'Monday',
+                'start' => '8:00',
+                'end' => '18:00'
             ]);
 
             $company->availabilities()->create([
-                'day' => 'tuesday',
-                'start' => '8:00:00',
-                'end' => '18:00:00'
+                'day' => 'Tuesday',
+                'start' => '8:00',
+                'end' => '18:00'
             ]);
 
             $company->availabilities()->create([
-                'day' => 'wednesday',
-                'start' => '8:00:00',
-                'end' => '18:00:00'
+                'day' => 'Wednesday',
+                'start' => '8:00',
+                'end' => '18:00'
             ]);
+
+            $createdCategories = [];
 
             foreach ($categories as $category) {
-                Category::create([
+                $created = Category::create([
                     'name' => $category
                 ]);
+                $createdCategories[] = $created->id;
             }
-            
-            $company->categories()->sync([1, 2, 3]);
 
-            $provider->services()->create([
+            $company->categories()->sync(array_slice($createdCategories, 0, 3));
+
+            $company->services()->create([
                 'name' => 'Car checkout',
                 'description' => 'full checkout of your vehicle',
                 'price' => '100'
             ]);
 
-            $provider->services()->create([
+            $company->services()->create([
                 'name' => 'Car software update',
                 'description' => 'update your car software',
                 'price' => '50'
@@ -138,7 +141,7 @@ class DatabaseSeeder extends Seeder
             ]);
 
             $company->files()->create([
-                'path' => '/storage/images/car-checkout.png',
+                'path' => '/images/car-checkout.png',
                 'type' => 'preview'
             ]);
         });

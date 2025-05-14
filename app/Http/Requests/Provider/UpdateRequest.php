@@ -33,6 +33,7 @@ class UpdateRequest extends FormRequest
             'categories' => ['required', 'array'],
             'categories.*' => ['required', 'integer', 'exists:categories,id'],
             'years_of_experience' => ['required', 'integer', 'min:0'],
+            'company_description' => ['nullable', 'string', 'max:1000'],
         ];
     }
 }

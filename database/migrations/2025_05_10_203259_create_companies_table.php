@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->string('name');
+            $table->text('description')->nullable();
             $table->unsignedTinyInteger('years_of_experience');
             $table->timestamps();
         });
