@@ -13,7 +13,8 @@ class Booking extends Model
         'user_id',
         'service_id',
         'start_time',
-        'end_time'
+        'end_time',
+        'date'
     ];
 
     public function service(): BelongsTo

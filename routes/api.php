@@ -2,9 +2,12 @@
 
 use App\Enums\TokenAbility;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CategoryProviderController;
+use App\Http\Controllers\CompanyAvailabilityController;
 use App\Http\Controllers\ProviderController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +32,9 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbility::ACCESS_API->value]
     Route::get('/user', [UserController::class, 'current']);
     Route::post('/user/update', [UserController::class, 'update']);
     Route::post('/provider/update', [ProviderController::class, 'update']);
+    Route::post('/booking/{service}', [BookingController::class, 'store']);
+    Route::get('/service/{company}', [ServiceController::class, 'index']);
+    Route::get('/availability/{company}', [CompanyAvailabilityController::class, 'index']);
     Route::prefix('admin')->group(function () {
 
     });

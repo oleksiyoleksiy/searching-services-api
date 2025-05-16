@@ -10,7 +10,7 @@ class CompanyAvailability extends Model
 
     protected $fillable = [
         'company_id',
-        'day',
+        'weekday',
         'start',
         'end'
     ];

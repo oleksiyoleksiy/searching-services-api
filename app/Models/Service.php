@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Service extends Model
 {
-    use FileTrait;
-
     protected $table = 'services';
 
     protected $fillable = [

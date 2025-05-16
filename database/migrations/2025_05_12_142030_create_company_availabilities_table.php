@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('company_availabilities', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Company::class)->constrained()->cascadeOnDelete();
-            $table->string('day');
+            $table->unsignedTinyInteger('weekday');
             $table->time('start');
             $table->time('end');
             $table->timestamps();

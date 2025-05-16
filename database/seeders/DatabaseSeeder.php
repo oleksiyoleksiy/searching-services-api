@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\Service;
 use App\Models\User;
+use Carbon\WeekDay;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -90,19 +91,19 @@ class DatabaseSeeder extends Seeder
 
 
             $company->availabilities()->create([
-                'day' => 'Monday',
+                'weekday' => WeekDay::Monday,
                 'start' => '8:00',
                 'end' => '18:00'
             ]);
 
             $company->availabilities()->create([
-                'day' => 'Tuesday',
+                'weekday' => WeekDay::Tuesday,
                 'start' => '8:00',
                 'end' => '18:00'
             ]);
 
             $company->availabilities()->create([
-                'day' => 'Wednesday',
+                'weekday' => WeekDay::Wednesday,
                 'start' => '8:00',
                 'end' => '18:00'
             ]);

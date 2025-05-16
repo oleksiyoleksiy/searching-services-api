@@ -1,5 +1,7 @@
 <?php
 
+use App\Enums\BookingStatusEnum;
+use App\Models\Booking;
 use App\Models\Service;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -15,12 +17,12 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->string('status', 30);
+            $table->string('status', 30)->default(BookingStatusEnum::PENDING->value);
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Service::class)->constrained()->cascadeOnDelete();
-            $table->string('day');
-            $table->timestamp('start_time');
-            $table->timestamp('end_time');
+            $table->date('date');
+            $table->time('start_time');
+            $table->time('end_time');
             $table->timestamps();
         });
     }

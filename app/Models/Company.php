@@ -25,45 +25,36 @@ class Company extends Model
     public function getAvailabilityAttribute()
     {
         $now = Carbon::now();
-        $currentDay = $now->format('l');
+        $currentWeekday = $now->dayOfWeek; // 0 (неділя) до 6 (субота)
         $currentTime = $now->format('H:i');
 
         $todayAvailable = $this->availabilities()
-            ->where('day', $currentDay)
+            ->where('weekday', $currentWeekday)
             ->where('start', '<=', $currentTime)
             ->where('end', '>=', $currentTime)
             ->first();
 
         if ($todayAvailable) {
-            return 'today up to ' . $todayAvailable->end;
+            return 'today up to ' . substr($todayAvailable->end, 0, 5);
         }
 
-        $daysOfWeek = [
-            'Monday',
-            'Tuesday',
-            'Wednesday',
-            'Thursday',
-            'Friday',
-            'Saturday',
-            'Sunday'
-        ];
-
-        $currentIndex = array_search($currentDay, $daysOfWeek);
         for ($i = 1; $i <= 7; $i++) {
-            $nextDay = $daysOfWeek[($currentIndex + $i) % 7];
+            $nextWeekday = ($currentWeekday + $i) % 7;
 
             $nextAvailability = $this->availabilities()
-                ->where('day', $nextDay)
+                ->where('weekday', $nextWeekday)
                 ->orderBy('start')
                 ->first();
 
             if ($nextAvailability) {
-                return $nextDay . ' ' . substr($nextAvailability->start, 0, 5);
+                $dayName = Carbon::create()->startOfWeek()->addDays($nextWeekday)->format('l');
+                return $dayName . ' ' . substr($nextAvailability->start, 0, 5);
             }
         }
 
         return '';
     }
+
 
     public function getRatingAttribute()
     {
