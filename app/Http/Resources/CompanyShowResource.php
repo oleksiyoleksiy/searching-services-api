@@ -29,7 +29,7 @@ class CompanyShowResource extends JsonResource
             'avialabilities' => $this->availabilities,
             'gallery' => $this->filesByType('gallery')->get()->map(fn($file) => $file->getURL()),
             'price' => $this->services()->min('price'),
-            'reviews' => ReviewResource::collection($this->reviews),
+            'reviews' => ReviewResource::collection($this->reviews()->orderByDesc('created_at')->get()),
             'services' => ServiceResource::collection($this->services),
         ];
     }

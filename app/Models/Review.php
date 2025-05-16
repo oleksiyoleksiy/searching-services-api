@@ -13,7 +13,7 @@ class Review extends Model
         'rating',
         'content',
         'user_id',
-        'service_id'
+        'company_id'
     ];
 
     public function user(): BelongsTo

@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CategoryProviderController;
 use App\Http\Controllers\CompanyAvailabilityController;
 use App\Http\Controllers\ProviderController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -35,6 +36,7 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbility::ACCESS_API->value]
     Route::post('/booking/{service}', [BookingController::class, 'store']);
     Route::get('/service/{company}', [ServiceController::class, 'index']);
     Route::get('/availability/{company}', [CompanyAvailabilityController::class, 'index']);
+    Route::post('/review/{company}', [ReviewController::class, 'store']);
     Route::prefix('admin')->group(function () {
 
     });
