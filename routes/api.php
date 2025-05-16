@@ -21,6 +21,7 @@ Route::post('/refresh', [AuthController::class, 'refresh'])
 
 Route::get('/category/{category}/provider', [CategoryProviderController::class, 'index']);
 Route::get('/provider', [ProviderController::class, 'index']);
+Route::get('/provider/{company}', [ProviderController::class, 'show']);
 Route::apiResource('category', CategoryController::class);
 
 Route::middleware(['auth:sanctum', 'ability:' . TokenAbility::ACCESS_API->value])->group(function () {

@@ -134,4 +134,9 @@ class ProviderService
 
         $company->categories()->sync($data['categories']);
     }
+
+    public function show(Company $company)
+    {
+        return $company->with(['reviews', 'services', 'availabilities', 'reviews'])->firstOrFail();
+    }
 }

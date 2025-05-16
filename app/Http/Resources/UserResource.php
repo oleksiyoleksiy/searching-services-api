@@ -26,6 +26,7 @@ class UserResource extends JsonResource
             'is_have_avatar' => $avatar !== null,
             'avatar' => $avatar ?? "https://ui-avatars.com/api/?name=$this->name",
             'phone_number' => $this->phone_number,
+            'postal_code' => $this->postal_code,
             'created_at' => $this->created_at->format('d M Y'),
             'company' => CompanyResource::make($this->company)
         ];

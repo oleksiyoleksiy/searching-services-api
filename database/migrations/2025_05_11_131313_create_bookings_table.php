@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('status', 30);
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Service::class)->constrained()->cascadeOnDelete();
+            $table->string('day');
             $table->timestamp('start_time');
             $table->timestamp('end_time');
             $table->timestamps();

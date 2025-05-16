@@ -58,7 +58,7 @@ class Company extends Model
                 ->first();
 
             if ($nextAvailability) {
-                return $nextDay . ' ' . substr($nextAvailability->start, 0, 5); 
+                return $nextDay . ' ' . substr($nextAvailability->start, 0, 5);
             }
         }
 
@@ -67,7 +67,7 @@ class Company extends Model
 
     public function getRatingAttribute()
     {
-        return $this->reviews()->avg('rating');
+        return number_format($this->reviews()->avg('rating'), 1);
     }
 
     public function categories(): BelongsToMany
