@@ -24,10 +24,11 @@ class CompanyResource extends JsonResource
             'years_of_experience' => $this->years_of_experience,
             'description' => $this->description,
             'reviews_count' => $this->reviews()->count(),
-            'preview' => $this->filesByType('preview')->first()?->getURL() ?? Storage::url('/images/no-image.png'),
+            'image' => $this->filesByType('preview')->first()?->getURL() ?? Storage::url('/images/no-image.png'),
             'address' => $this->user->address,
+            'postal_code' => $this->user->postal_code,
             'availability' => $this->availability,
-            'price_from' => $this->services()->min('price')
+            'price' => $this->services()->min('price')
         ];
     }
 }

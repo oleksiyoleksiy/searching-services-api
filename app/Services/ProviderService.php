@@ -5,15 +5,32 @@ namespace App\Services;
 use App\Models\Category;
 use App\Models\Company;
 use App\Models\User;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ProviderService
 {
-    public function index(Category $category)
+    public function indexByCategory(Category $category)
     {
         $query = $category->companies()->with(['reviews', 'services', 'availabilities']);
 
+        $this->applyFilters($query);
+
+        return $query->get();
+    }
+
+    public function index()
+    {
+        $query = Company::query()->with(['reviews', 'services', 'availabilities']);
+
+        $this->applyFilters($query);
+
+        return $query->get();
+    }
+
+    public function applyFilters(&$query)
+    {
         if ($search = request('search')) {
             $query->where('name', 'LIKE', "%$search%");
         }
@@ -54,11 +71,16 @@ class ProviderService
                 }
             });
         }
+        if ($postalCode = request('postalCode')) {
+            $query->whereHas('user', function ($q) use ($postalCode) {
+                $q->where('postal_code', $postalCode);
+            });
+        }
 
-        return $query->get();
+        if ($limit = request('limit')) {
+            $query->limit($limit);
+        }
     }
-
-
 
     public function update(array $data)
     {

@@ -3,6 +3,7 @@
 use App\Enums\TokenAbility;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CategoryProviderController;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -18,7 +19,8 @@ Route::middleware('guest:sanctum')->controller(AuthController::class)->group(
 Route::post('/refresh', [AuthController::class, 'refresh'])
     ->middleware(['auth:sanctum', 'ability:' . TokenAbility::ISSUE_ACCESS_TOKEN->value]);
 
-Route::get('/category/{category}/provider', [ProviderController::class, 'index']);
+Route::get('/category/{category}/provider', [CategoryProviderController::class, 'index']);
+Route::get('/provider', [ProviderController::class, 'index']);
 Route::apiResource('category', CategoryController::class);
 
 Route::middleware(['auth:sanctum', 'ability:' . TokenAbility::ACCESS_API->value])->group(function () {

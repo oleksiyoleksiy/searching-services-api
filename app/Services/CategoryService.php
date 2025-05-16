@@ -9,7 +9,13 @@ class CategoryService
 {
     public function index()
     {
-        return Category::all();
+        $query = Category::query();
+
+        if ($limit = request('limit')) {
+            $query->limit($limit);
+        }
+
+        return $query->get();
     }
 
 }

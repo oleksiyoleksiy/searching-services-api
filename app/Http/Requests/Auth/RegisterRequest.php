@@ -26,6 +26,7 @@ class RegisterRequest extends FormRequest
             'name' => 'required|string|max:50',
             'email' => ['required', 'string', 'email:rfc,dns', 'ends_with:.com,.net,.ua', "unique:users,email,{$this->user_id},id",],
             'phone_number' => ['required', 'phone', "unique:users,phone_number,{$this->user_id},id"],
+            'postal_code' => ['required', 'string', 'digits:5'],
             'address' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'company_name' => ['required_if:user_type,provider', 'nullable', 'string', 'max:50'],

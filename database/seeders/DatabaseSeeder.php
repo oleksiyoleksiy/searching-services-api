@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
             $user = User::factory()->create([
                 'name' => 'Test User',
                 'email' => 'test@gmail.com',
-                'address' => '123 test St, New York City',
+                'address' => '123 test St',
+                'postal_code' => '88000',
                 'phone_number' => '+380999999999'
             ]);
 
@@ -32,6 +33,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'provider',
                 'email' => 'provider@gmail.com',
                 'address' => '123 provider St, Uzhhorod',
+                'postal_code' => '88000',
                 'phone_number' => '+380111111111'
             ]);
 

@@ -17,8 +17,8 @@ class CategoryController extends Controller
         return CategoryResource::collection($this->service->index());
     }
 
-    public function show(int $category)
-    {
-        return CategoryShowResource::make($this->service->show($category));
-    }
+    // public function show(int $category)
+    // {
+    //     return CategoryShowResource::make($this->service->show($category));
+    // }
 }

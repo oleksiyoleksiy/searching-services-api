@@ -15,12 +15,9 @@ class ProviderController extends Controller
 {
     public function __construct(private ProviderService $service) {}
 
-    public function index(Category $category)
+    public function index()
     {
-        return response()->json([
-            'category' => CategoryResource::make($category),
-            'providers' => CompanyResource::collection($this->service->index($category))
-        ], Response::HTTP_OK);
+        return CompanyResource::collection($this->service->index());
     }
 
     public function update(UpdateRequest $request)
