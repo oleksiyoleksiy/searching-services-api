@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Booking\BookingRequest;
+use App\Http\Resources\BookingResource;
 use App\Services\BookingService;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class BookingController extends Controller
      */
     public function index()
     {
-        //
+        return BookingResource::collection($this->service->index());
     }
 
     /**
@@ -29,6 +30,15 @@ class BookingController extends Controller
 
         return response()->json([
             'message' => 'booking created successfully',
+        ]);
+    }
+
+    public function cancel(int $booking)
+    {
+        $this->service->cancel($booking);
+
+        return response()->json([
+            'message' => 'booking canceled successfully',
         ]);
     }
 

@@ -69,6 +69,8 @@ class DatabaseSeeder extends Seeder
 
             $user->roles()->attach($admin);
 
+            $provider->assignRole('provider');
+
             $categories = [
                 'Hair & Beauty',
                 'Home Repair',

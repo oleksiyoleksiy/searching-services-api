@@ -39,8 +39,12 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbility::ACCESS_API->value]
         Route::get('', 'index');
         Route::post('{company}', 'store');
     });
+    Route::group(['controller' => BookingController::class, 'prefix' => 'booking'], function () {
+        Route::get('', 'index');
+        Route::post('{service}', 'store');
+        Route::post('{booking}/cancel', 'cancel');
+    });
     Route::post('/provider/update', [ProviderController::class, 'update']);
-    Route::post('/booking/{service}', [BookingController::class, 'store']);
     Route::get('/service/{company}', [ServiceController::class, 'index']);
     Route::get('/availability/{company}', [CompanyAvailabilityController::class, 'index']);
     Route::post('/review/{company}', [ReviewController::class, 'store']);
