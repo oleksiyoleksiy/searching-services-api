@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CompanyResource;
 use App\Services\FavoriteService;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class FavoriteController extends Controller
      */
     public function index()
     {
-        //
+        return CompanyResource::collection($this->service->index());
     }
 
     /**

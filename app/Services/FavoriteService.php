@@ -2,8 +2,15 @@
 
 namespace App\Services;
 
+use App\Models\Company;
+
 class FavoriteService
 {
+    public function index()
+    {
+        return Company::whereHas('favorites', fn($q) => $q->where('user_id', auth()->id()))->get();
+    }
+
     public function store(int $company)
     {
         $favorites = auth()->user()->favorites();

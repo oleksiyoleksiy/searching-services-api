@@ -31,15 +31,18 @@ Route::apiResource('category', CategoryController::class);
 
 Route::middleware(['auth:sanctum', 'ability:' . TokenAbility::ACCESS_API->value])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::group([UserController::class], function () {
-        Route::get('/user', [UserController::class, 'current']);
-        Route::post('/user/update', [UserController::class, 'update']);
+    Route::group(['controller' => UserController::class, 'prefix' => 'user'], function () {
+        Route::get('', 'current');
+        Route::post('update', 'update');
+    });
+    Route::group(['controller' => FavoriteController::class, 'prefix' => 'favorite'], function () {
+        Route::get('', 'index');
+        Route::post('{company}', 'store');
     });
     Route::post('/provider/update', [ProviderController::class, 'update']);
     Route::post('/booking/{service}', [BookingController::class, 'store']);
     Route::get('/service/{company}', [ServiceController::class, 'index']);
     Route::get('/availability/{company}', [CompanyAvailabilityController::class, 'index']);
     Route::post('/review/{company}', [ReviewController::class, 'store']);
-    Route::post('/favorite/{company}', [FavoriteController::class, 'store']);
     Route::prefix('admin')->group(function () {});
 });
