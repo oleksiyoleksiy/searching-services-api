@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Company;
 use App\Models\Service;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -16,7 +17,7 @@ return new class extends Migration
         Schema::create('favorites', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Service::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Company::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

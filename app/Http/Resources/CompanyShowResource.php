@@ -15,6 +15,7 @@ class CompanyShowResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -26,11 +27,12 @@ class CompanyShowResource extends JsonResource
             'image' => $this->filesByType('preview')->first()?->getURL() ?? Storage::url('/images/no-image.png'),
             'user' => UserResource::make($this->user),
             'availability' => $this->availability,
-            'avialabilities' => $this->availabilities,
+            'availabilities' => AvailabilityResource::collection($this->availabilities),
             'gallery' => $this->filesByType('gallery')->get()->map(fn($file) => $file->getURL()),
             'price' => $this->services()->min('price'),
             'reviews' => ReviewResource::collection($this->reviews()->orderByDesc('created_at')->get()),
             'services' => ServiceResource::collection($this->services),
+            'is_favorite' => $this->is_favorite,
         ];
     }
 }

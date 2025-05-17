@@ -10,13 +10,13 @@ class Favorite extends Model
     protected $table = 'favorites';
 
     protected $fillable = [
-        'service_id',
+        'company_id',
         'user_id',
     ];
 
-    public function service(): BelongsTo
+    public function company(): BelongsTo
     {
-        return $this->belongsTo(Service::class);
+        return $this->belongsTo(Company::class);
     }
 
     public function user(): BelongsTo

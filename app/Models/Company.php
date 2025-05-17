@@ -85,4 +85,15 @@ class Company extends Model
     {
         return $this->hasMany(Service::class);
     }
+
+    public function favorites(): HasMany
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    public function getIsFavoriteAttribute()
+    {
+        return $this->favorites()->where('user_id', auth()->id())
+            ->exists();
+    }
 }

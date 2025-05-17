@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Category;
 use App\Models\Company;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -39,26 +40,40 @@ class ProviderService
             $query->whereHas('availabilities', function ($q) use ($availability) {
                 $q->where(function ($sub) use ($availability) {
                     if (in_array('today', $availability)) {
-                        $sub->where('day', now()->format('l'))
+                        $sub->where('weekday', now()->weekday())
                             ->where('start', '<=', now()->format('H:i'))
                             ->where('end', '>=', now()->format('H:i'));
                     } elseif (in_array('weekend', $availability)) {
-                        $sub->whereIn('day', ['Saturday', 'Sunday']);
+                        $sub->whereIn('weekday', Carbon::getWeekendDays());
                     }
                 });
             });
         }
 
-        if ($rating = request('rating')) {
-            if (in_array($rating, ['3plus', '4plus'])) {
-                $min = $rating === '3plus' ? 3 : 4;
-                $query->whereHas('reviews', function ($q) use ($min) {
-                    $q->selectRaw('company_id, AVG(rating) as avg_rating')
+        if ($ratings = request('rating')) {
+            $thresholds = [];
+
+            if (in_array('3plus', $ratings)) {
+                $thresholds[] = 3;
+            }
+
+            if (in_array('4plus', $ratings)) {
+                $thresholds[] = 4;
+            }
+
+            if (!empty($thresholds)) {
+                $min = min($thresholds);
+
+                $query->whereIn('companies.id', function ($subquery) use ($min) {
+                    $subquery->select('company_id')
+                        ->from('reviews')
                         ->groupBy('company_id')
                         ->havingRaw('AVG(rating) >= ?', [$min]);
                 });
             }
         }
+
+
 
         if ($priceRange = request('priceRange')) {
             $query->whereHas('services', function ($q) use ($priceRange) {

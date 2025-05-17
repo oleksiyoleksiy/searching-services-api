@@ -6,6 +6,7 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CategoryProviderController;
 use App\Http\Controllers\CompanyAvailabilityController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ServiceController;
@@ -25,19 +26,20 @@ Route::post('/refresh', [AuthController::class, 'refresh'])
 
 Route::get('/category/{category}/provider', [CategoryProviderController::class, 'index']);
 Route::get('/provider', [ProviderController::class, 'index']);
-Route::get('/provider/{company}', [ProviderController::class, 'show']);
+Route::get('/provider/{company}', [ProviderController::class, 'show'])->middleware('optional-auth');
 Route::apiResource('category', CategoryController::class);
 
 Route::middleware(['auth:sanctum', 'ability:' . TokenAbility::ACCESS_API->value])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/user', [UserController::class, 'current']);
-    Route::post('/user/update', [UserController::class, 'update']);
+    Route::group([UserController::class], function () {
+        Route::get('/user', [UserController::class, 'current']);
+        Route::post('/user/update', [UserController::class, 'update']);
+    });
     Route::post('/provider/update', [ProviderController::class, 'update']);
     Route::post('/booking/{service}', [BookingController::class, 'store']);
     Route::get('/service/{company}', [ServiceController::class, 'index']);
     Route::get('/availability/{company}', [CompanyAvailabilityController::class, 'index']);
     Route::post('/review/{company}', [ReviewController::class, 'store']);
-    Route::prefix('admin')->group(function () {
-
-    });
+    Route::post('/favorite/{company}', [FavoriteController::class, 'store']);
+    Route::prefix('admin')->group(function () {});
 });
