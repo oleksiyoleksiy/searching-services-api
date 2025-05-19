@@ -20,7 +20,16 @@ return Application::configure(basePath: dirname(__DIR__))
                 ->prefix('api/provider')
                 ->as('provider.')
                 ->group(__DIR__ . '/../routes/provider.php');
+
+            Route::middleware(['auth:sanctum', 'can:admin', 'ability:' . TokenAbility::ACCESS_API->value])
+                ->prefix('api/admin')
+                ->as('admin.')
+                ->group(__DIR__ . '/../routes/admin.php');
         },
+    )
+    ->withBroadcasting(
+        __DIR__ . '/../routes/channels.php',
+        ['prefix' => 'api', 'middleware' => ['api', 'auth:sanctum']],
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([

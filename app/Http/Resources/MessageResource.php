@@ -17,7 +17,7 @@ class MessageResource extends JsonResource
         return [
             'id' => $this->id,
             'content' => $this->content,
-            'created_at' => $this->diffForHumans(),
+            'created_at' => $this->created_at->format('H:i'),
             'is_owner' => $this->is_owner
         ];
     }

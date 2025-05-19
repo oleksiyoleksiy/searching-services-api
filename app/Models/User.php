@@ -90,4 +90,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Chat::class);
     }
+
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Message::class);
+    }
 }

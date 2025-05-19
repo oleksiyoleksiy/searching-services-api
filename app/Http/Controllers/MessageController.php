@@ -14,13 +14,13 @@ class MessageController extends Controller
 
     public function index(int $chat)
     {
-        return MessageResource::collection($this->service->index($chat));
+        return response()->json($this->service->index($chat));
     }
 
     public function store(MessageRequest $request, int $chat)
     {
         $data = $request->validated();
 
-        return MessageResource::make($this->service->store($data, $chat));
+        return response()->json($this->service->store($data, $chat));
     }
 }
