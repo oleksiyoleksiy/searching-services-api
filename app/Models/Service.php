@@ -32,4 +32,11 @@ class Service extends Model
     {
         return $this->hasMany(Booking::class);
     }
+
+    public function getIsOwnerAttribute(): bool
+    {
+        if (!auth()->check()) return false;
+
+        return $this->company?->user->id === auth()->id();
+    }
 }

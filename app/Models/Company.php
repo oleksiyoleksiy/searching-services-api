@@ -96,4 +96,11 @@ class Company extends Model
         return $this->favorites()->where('user_id', auth()->id())
             ->exists();
     }
+
+    public function getIsOwnerAttribute(): bool
+    {
+        if(!auth()->check()) return false;
+        
+        return $this->company?->user->id === auth()->id();
+    }
 }

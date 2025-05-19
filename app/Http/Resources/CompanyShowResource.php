@@ -33,6 +33,7 @@ class CompanyShowResource extends JsonResource
             'reviews' => ReviewResource::collection($this->reviews()->orderByDesc('created_at')->get()),
             'services' => ServiceResource::collection($this->services),
             'is_favorite' => $this->is_favorite,
+            'is_owner' => $this->is_owner
         ];
     }
 }

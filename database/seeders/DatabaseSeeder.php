@@ -35,7 +35,15 @@ class DatabaseSeeder extends Seeder
                 'email' => 'provider@gmail.com',
                 'address' => '123 provider St, Uzhhorod',
                 'postal_code' => '88000',
-                'phone_number' => '+380111111111'
+                'phone_number' => '+380991111111'
+            ]);
+
+            $user = User::factory()->create([
+                'name' => 'user',
+                'email' => 'user@gmail.com',
+                'address' => '123 user St, Uzhhorod',
+                'postal_code' => '88000',
+                'phone_number' => '+380992222222'
             ]);
 
             $admin = Role::create([

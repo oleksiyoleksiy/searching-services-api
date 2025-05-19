@@ -28,7 +28,8 @@ class CompanyResource extends JsonResource
             'address' => $this->user->address,
             'postal_code' => $this->user->postal_code,
             'availability' => $this->availability,
-            'price' => $this->services()->min('price')
+            'price' => $this->services()->min('price'),
+            'is_owner' => $this->is_owner
         ];
     }
 }

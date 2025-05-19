@@ -15,9 +15,9 @@ class Chat extends Model
         return $this->belongsToMany(User::class);
     }
 
-    public function getInterlocutorAttribute(): User
+    public function getInterlocutorAttribute(): ?User
     {
-        return $this->users()->whereNot('user_id', auth()->id())->first();
+        return $this->users()->whereNot('users.id', auth()->id())->first();
     }
 
     public function messages(): HasMany

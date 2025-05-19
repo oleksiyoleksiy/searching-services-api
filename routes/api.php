@@ -5,8 +5,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CategoryProviderController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CompanyAvailabilityController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ServiceController;
@@ -39,12 +41,19 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbility::ACCESS_API->value]
         Route::get('', 'index');
         Route::post('{company}', 'store');
     });
+
+    Route::group(['controller' => MessageController::class, 'prefix' => 'message'], function () {
+        Route::get('{chat}', 'index');
+        Route::post('{chat}', 'store');
+    });
+
+    Route::get('chat', [ChatController::class, 'index']);
+
     Route::group(['controller' => BookingController::class, 'prefix' => 'booking'], function () {
         Route::get('', 'index');
         Route::post('{service}', 'store');
         Route::post('{booking}/cancel', 'cancel');
     });
-    Route::post('/provider/update', [ProviderController::class, 'update']);
     Route::get('/service/{company}', [ServiceController::class, 'index']);
     Route::get('/availability/{company}', [CompanyAvailabilityController::class, 'index']);
     Route::post('/review/{company}', [ReviewController::class, 'store']);

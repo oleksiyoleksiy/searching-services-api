@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Booking\BookingRequest;
 use App\Http\Resources\BookingResource;
+use App\Models\Service;
 use App\Services\BookingService;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,7 @@ class BookingController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(int $service, BookingRequest $request)
+    public function store(Service $service, BookingRequest $request)
     {
         $data = $request->validated();
 

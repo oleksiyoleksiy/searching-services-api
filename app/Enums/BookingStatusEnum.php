@@ -10,4 +10,9 @@ enum BookingStatusEnum: string
     case REJECTED = 'rejected';
     case COMPLETED = 'completed';
     case NO_SHOW = 'no_show';
+
+    public function isUpcoming(): bool
+    {
+        return $this === self::UPCOMING;
+    }
 }

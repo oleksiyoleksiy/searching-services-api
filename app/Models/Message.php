@@ -13,4 +13,9 @@ class Message extends Model
         'user_id',
         'chat_id'
     ];
+
+    public function getIsOwnerAttribute()
+    {
+        return $this->user_id === auth()->id();
+    }
 }
