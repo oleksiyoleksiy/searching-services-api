@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -8,4 +9,11 @@ Route::group(['prefix' => 'user', 'controller' => UserController::class, 'as' =>
     Route::get('{user}', 'show')->name('show');
     Route::post('', 'store')->name('store');
     Route::post('{user}', 'update')->name('update');
+});
+
+Route::group(['prefix' => 'service', 'controller' => ServiceController::class, 'as' => 'service.'], function () {
+    Route::get('', 'index')->name('index');
+    Route::post('', 'store')->name('store');
+    Route::put('{user}', 'update')->name('update');
+    Route::delete('{user}', 'destroy')->name('destroy');
 });
