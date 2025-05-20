@@ -18,7 +18,8 @@ class MessageResource extends JsonResource
             'id' => $this->id,
             'content' => $this->content,
             'created_at' => $this->created_at->format('H:i'),
-            'is_owner' => $this->is_owner
+            // 'is_owner' => $this->is_owner,
+            'user_id' => $this->user_id
         ];
     }
 }

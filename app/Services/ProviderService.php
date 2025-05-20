@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Storage;
 
 class ProviderService
 {
+    public function __construct(private UserService $service) {
+    }
+
+
     public function indexByCategory(Category $category)
     {
         $query = $category->companies()->with(['reviews', 'services', 'availabilities']);
@@ -73,8 +77,6 @@ class ProviderService
             }
         }
 
-
-
         if ($priceRange = request('priceRange')) {
             $query->whereHas('services', function ($q) use ($priceRange) {
                 if ($priceRange === 'low') {
@@ -102,36 +104,15 @@ class ProviderService
         return DB::transaction(function () use ($data) {
             $avatar = data_get($data, 'avatar');
 
-            $avatar_remove = $data['avatar_remove'];
+            $avatar_remove = (bool) ($data['avatar_remove'] ?? false);
 
             $user = auth()->user();
 
             $this->updateCompany($user, $data);
 
-            unset(
-                $data['avatar'],
-                $data['company_name'],
-                $data['years_of_experience'],
-                $data['company_description'],
-                $data['categories']
-            );
-
             $user->update($data);
 
-            if ($avatar_remove) {
-                $user->filesByType('avatar')->first()?->delete();
-            }
-
-            if ($avatar) {
-                $user->filesByType('avatar')->first()?->delete();
-
-                $path = $avatar->store('images');
-
-                $user->files()->create([
-                    'type' => 'avatar',
-                    'path' => $path
-                ]);
-            }
+            $this->service->updateAvatar($user, $avatar, $avatar_remove);
 
             return $user->refresh();
         });
@@ -144,7 +125,7 @@ class ProviderService
         $company->update([
             'name' => $data['company_name'],
             'years_of_experience' => $data['years_of_experience'],
-            'company_description' => $data['company_description'],
+            'description' => $data['company_description'],
         ]);
 
         $company->categories()->sync($data['categories']);

@@ -32,7 +32,7 @@ class MessageSentEvent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PresenceChannel('chat.' . $this->message->chat->id),
+            new Channel('chat.' . $this->message->chat->id),
         ];
     }
 

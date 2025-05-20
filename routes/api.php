@@ -57,5 +57,4 @@ Route::middleware(['auth:sanctum', 'ability:' . TokenAbility::ACCESS_API->value]
     Route::get('/service/{company}', [ServiceController::class, 'index']);
     Route::get('/availability/{company}', [CompanyAvailabilityController::class, 'index']);
     Route::post('/review/{company}', [ReviewController::class, 'store']);
-    Route::prefix('admin')->group(function () {});
 });
