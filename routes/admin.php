@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\StatsController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/stats', [StatsController::class, 'index'])->name('stats.index');
 
 Route::group(['prefix' => 'user', 'controller' => UserController::class, 'as' => 'user.'], function () {
     Route::get('', 'index')->name('index');
