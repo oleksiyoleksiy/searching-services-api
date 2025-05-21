@@ -24,7 +24,7 @@ class CompanyResource extends JsonResource
             'years_of_experience' => $this->years_of_experience,
             'description' => $this->description,
             'reviews_count' => $this->reviews()->count(),
-            'image' => $this->filesByType('preview')->first()?->getURL() ?? Storage::url('/images/no-image.png'),
+            'image' => $this->filesByType('preview')->first()?->getURL(),
             'address' => $this->user->address,
             'postal_code' => $this->user->postal_code,
             'availability' => $this->availability,

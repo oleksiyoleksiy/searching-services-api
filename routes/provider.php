@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Provider\BookingController;
+use App\Http\Controllers\Provider\CompanyController;
 use App\Http\Controllers\Provider\ReviewController;
 use App\Http\Controllers\Provider\ServiceController;
 use App\Http\Controllers\Provider\StatsController;
@@ -11,6 +12,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('review', [ReviewController::class, 'index'])->name('review.index');
 
 Route::post('update', [ProviderController::class, 'update']);
+
+Route::group(
+    ['controller' => CompanyController::class, 'prefix' => 'company', 'as' => 'company'],
+    function () {
+        Route::post('update', 'update');
+        Route::get('', 'index');
+    }
+);
 
 Route::group(['controller' => ServiceController::class, 'prefix' => 'service', 'as' => 'service.'], function () {
     Route::get('', 'index')->name('index');
