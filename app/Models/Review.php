@@ -21,8 +21,8 @@ class Review extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function service(): BelongsTo
+    public function company(): BelongsTo
     {
-        return $this->belongsTo(Service::class);
+        return $this->belongsTo(Company::class);
     }
 }
