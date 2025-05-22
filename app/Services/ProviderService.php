@@ -133,6 +133,6 @@ class ProviderService
 
     public function show(Company $company)
     {
-        return $company->with(['reviews', 'services', 'availabilities', 'reviews'])->firstOrFail();
+        return $company->load(['reviews', 'services', 'availabilities', 'reviews']);
     }
 }

@@ -54,7 +54,7 @@ class CompanyService
     public function updateGallery(Company $company, array $galleryImages, array $idsToRemove): void
     {
         if ($idsToRemove) {
-            File::whereIn('id', $idsToRemove)->delete();
+            File::whereIn('id', $idsToRemove)->get()->map->delete();
         }
 
         foreach ($galleryImages as $image) {

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\StatsController;
@@ -25,4 +26,11 @@ Route::group(['prefix' => 'service', 'controller' => ServiceController::class, '
 Route::group(['prefix' => 'review', 'controller' => ReviewController::class, 'as' => 'review.'], function () {
     Route::get('', 'index')->name('index');
     Route::delete('{review}', 'destroy')->name('destroy');
+});
+
+Route::group(['prefix' => 'category', 'controller' => CategoryController::class, 'as' => 'category.'], function () {
+    Route::get('', 'index')->name('index');
+    Route::post('', 'store')->name('store');
+    Route::put('{category}', 'update')->name('update');
+    Route::delete('{category}', 'destroy')->name('destroy');
 });
